@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Meeting Aryan Panicker & Mrudav Mehta — Year 0 → 14,000,000,000</title>
+<style>
+  :root{
+    --bg:#071020;
+    --panel:#0f1724;
+    --accent:#ffd166;
+    --muted:#98a8b9;
+    --glass: rgba(255,255,255,0.03);
+    --card-radius:16px;
+    --max-width:1100px;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background: radial-gradient(1200px 800px at 10% 10%, #112034 0%, var(--bg) 35%), linear-gradient(180deg, rgba(255,255,255,0.02), transparent 40%);
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+  }
+  .app {
+    width:100%;
+    max-width:var(--max-width);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:20px;
+    padding:20px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+    overflow:hidden;
+  }
+
+  header{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    margin-bottom:12px;
+  }
+  .logo{
+    width:56px;height:56px;border-radius:12px;
+    display:grid;place-items:center;
+    font-weight:700;color:var(--bg);
+    background: linear-gradient(135deg,var(--accent), #ff9f1c);
+    box-shadow: 0 6px 18px rgba(255,161,52,0.12);
+  }
+  h1{font-size:1.15rem;margin:0}
+  p.lead{margin:0;color:var(--muted);font-size:0.92rem}
+
+  .content{
+    display:grid;
+    grid-template-columns: 1fr 380px;
+    gap:18px;
+    align-items:start;
+  }
+
+  /* Timeline panel */
+  .timeline {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    padding:18px;border-radius:var(--card-radius);
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .slider-row{display:flex;gap:12px;align-items:center;margin-top:8px}
+  .year-bubble{
+    min-width:170px;padding:10px 12px;border-radius:10px;background:var(--glass);
+    color:var(--accent);font-weight:700;text-align:center;font-size:0.98rem;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  input[type=range]{
+    -webkit-appearance:none;width:100%;height:12px;background:transparent;
+  }
+  input[type=range]::-webkit-slider-runnable-track{
+    height:6px;border-radius:999px;background:linear-gradient(90deg,#2b6b91,#7fb5e8);
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;margin-top:-6px;width:20px;height:20px;border-radius:50%;
+    background:linear-gradient(180deg,#fff,#ffd166);box-shadow:0 6px 14px rgba(0,0,0,0.5);
+    border:2px solid rgba(0,0,0,0.15);
+  }
+  .markers{display:flex;justify-content:space-between;margin-top:8px;color:var(--muted);font-size:0.82rem}
+
+  /* Scene panel */
+  .scene{
+    height:420px;padding:18px;border-radius:var(--card-radius);
+    display:flex;flex-direction:column;gap:12px;
+    justify-content:center;align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(500px 200px at 10% 20%, rgba(255,255,255,0.02), transparent),
+      linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .scene .bg-legend{position:absolute;left:18px;top:18px; color:var(--muted);font-size:0.78rem}
+  .scene .avatars{display:flex;gap:18px;align-items:flex-end;justify-content:center;z-index:3}
+  .avatar{
+    width:130px;height:130px;border-radius:18px;background:linear-gradient(180deg,#fff,#e6f0ff);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#072034;font-weight:700;padding:10px;font-size:0.95rem;
+    box-shadow:0 8px 24px rgba(4,10,20,0.5);
+    transform-origin:center bottom;
+  }
+  .avatar.small{width:92px;height:92px;border-radius:12px;font-size:0.82rem}
+  .dialog{
+    max-width:740px;background:rgba(0,0,0,0.35);padding:12px 14px;border-radius:12px;color:#f3f8ff;
+    line-height:1.35;border:1px solid rgba(255,255,255,0.03);
+  }
+
+  /* Right column: controls & export */
+  .card-right{
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .panel{
+    padding:14px;border-radius:14px;background:var(--panel);
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .meta-row{display:flex;gap:8px;align-items:center;justify-content:space-between}
+  .btn{
+    background:linear-gradient(180deg,var(--accent), #ff9f1c);
+    border:none;padding:10px 12px;border-radius:10px;color:var(--bg);font-weight:700;cursor:pointer;
+    box-shadow:0 8px 18px rgba(255,150,50,0.12);
+  }
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);box-shadow:none}
+  .notes{color:var(--muted);font-size:0.90rem}
+  .share-row{display:flex;gap:8px}
+
+  /* Printable card (print-friendly) */
+  .printable-card{
+    margin-top:12px;padding:14px;border-radius:12px;background:linear-gradient(180deg,#081521,#062033);color:#eaf6ff;
+    display:flex;flex-direction:column;gap:8px;align-items:center;
+  }
+  .card-title{font-weight:800;color:var(--accent)}
+  .card-sub{color:var(--muted);font-size:0.9rem}
+
+  /* responsive */
+  @media (max-width:980px){
+    .content{grid-template-columns:1fr; }
+    .scene{height:360px}
+    .avatars{gap:12px}
+  }
+
+  /* Print CSS for the printable-card */
+  @media print{
+    body{background:white;color:black}
+    .app{box-shadow:none;border:none}
+  }
+
+</style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="logo">M</div>
+      <div>
+        <h1>Meeting — Aryan Panicker & Mrudav Mehta</h1>
+        <p class="lead">Explore the same meeting across a cosmic timeline (year 0 → 14,000,000,000). Drag the slider to pick a year and see the scene change.</p>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="timeline">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Timeline</strong>
+          <div style="font-size:0.92rem;color:var(--muted)">Scale: years since Year 0</div>
+        </div>
+
+        <div class="slider-row" style="margin-top:12px">
+          <input id="yearRange" type="range" min="0" max="14000000000" value="13800000000" step="1000000" />
+          <div class="year-bubble" id="yearBubble">13,800,000,000</div>
+        </div>
+
+        <div class="markers" aria-hidden="true">
+          <div>0</div>
+          <div>4,500,000,000</div>
+          <div>3,500,000,000</div>
+          <div>13,800,000,000</div>
+          <div>14,000,000,000</div>
+        </div>
+
+        <div style="margin-top:14px;color:var(--muted);font-size:0.92rem">
+          Tip: Use the slider thumb or the left/right arrow keys (when focused) to change the chosen year. The scene, dialogue, and background update dynamically.
+        </div>
+      </section>
+
+      <aside class="card-right">
+        <div class="scene" id="scene">
+          <div class="bg-legend" id="bgLegend">Universe: Present</div>
+          <div class="avatars" id="avatars">
+            <div class="avatar" id="avatar1">
+              Aryan<br/><small style="font-weight:600;color:#053046">Panicker</small>
+            </div>
+            <div class="avatar small" id="avatar2">
+              &amp; Mrudav
+            </div>
+          </div>
+          <div class="dialog" id="dialog">
+            They meet beneath a sky of familiar stars — curious, friendly, and full of possibility. The year carries a particular mood; their conversation shifts with cosmic time.
+          </div>
+        </div>
+
+        <div class="panel" style="display:flex;flex-direction:column;gap:8px">
+          <div class="meta-row">
+            <div>
+              <div style="font-size:0.86rem;color:var(--muted)">Selected year</div>
+              <div style="font-weight:800" id="selectedYearReadable">13,800,000,000</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:0.86rem;color:var(--muted)">Scene</div>
+              <div id="sceneLabel" style="font-weight:700">Present — Meeting of equals</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn" id="exportBtn">Save image</button>
+            <button class="btn ghost" id="resetBtn">Reset to present</button>
+          </div>
+
+          <div class="notes">Printable card below — use "Save as PDF" from your browser's Print dialog for a clean, shareable card.</div>
+
+          <div class="printable-card" id="printCard">
+            <div class="card-title" id="cardTitle">Meeting — Aryan & Mrudav</div>
+            <div class="card-sub" id="cardSub">Year: 13,800,000,000 — Present</div>
+            <div style="font-size:0.9rem;color:var(--muted)">A small snapshot you can print or share.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- html2canvas for export (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    // Scenes definitions mapped to ranges (years)
+    const scenes = [
+      { max: 1e4, label: "The Spark — Big Bang", bg: "radial-gradient(800px 800px at 20% 20%, #ffdbdb 0%, #2b0b2b 25%), linear-gradient(180deg,#1b0020,#070420)", dialog: "The universe sparks into being. Aryan and Mrudav meet as raw particles of possibility, exchanging concept-ideas written in light."},
+      { max: 1e8, label: "Afterglow — Early Cosmos", bg: "radial-gradient(700px 400px at 10% 10%, #ffd9b3, transparent), linear-gradient(180deg,#091424,#061426)", dialog: "The cosmos cools and galaxies form. They greet each other with wide-eyed wonder, speaking in simple hopes and maps."},
+      { max: 4.6e9, label: "Rock & Ocean — Planetary Youth", bg: "linear-gradient(180deg,#053a4a,#071827)", dialog: "Planets coalesce. At this age their meeting smells of minerals and sea-spray, curious about how life might begin."},
+      { max: 6e9, label: "First Life — Deep Time", bg: "linear-gradient(180deg,#083b32,#041822)", dialog: "Tiny cells appear. Aryan and Mrudav trade tiny, persistent ideas — seeds of culture, cooperation, and curiosity."},
+      { max: 13.5e9, label: "Emergence — Intelligent Spark", bg: "linear-gradient(180deg,#0b2a3a,#041218)", dialog: "Brains and stories form. They meet as thinkers discovering tools and language — playful, experimental, human."},
+      { max: 13.8e9, label: "Present — Meeting of equals", bg: "linear-gradient(180deg,#1b3b58,#061425)", dialog: "A contemporary meeting: frank conversation, laughter, plans for tomorrow. They trade jokes and a shared cup of coffee."},
+      { max: 14e9+1, label: "Far Future — Speculation", bg: "radial-gradient(900px 500px at 80% 20%, rgba(255,230,200,0.05), transparent), linear-gradient(180deg,#0b1530,#060814)", dialog: "The far future is speculative: stars fade and new architectures of thought arise. Their meeting becomes philosophy at scale — gentle, timeless, and vast."}
+    ];
+
+    const yearRange = document.getElementById('yearRange');
+    const yearBubble = document.getElementById('yearBubble');
+    const selectedYearReadable = document.getElementById('selectedYearReadable');
+    const sceneLabel = document.getElementById('sceneLabel');
+    const dialog = document.getElementById('dialog');
+    const sceneEl = document.getElementById('scene');
+    const bgLegend = document.getElementById('bgLegend');
+    const avatars = document.getElementById('avatars');
+    const avatar1 = document.getElementById('avatar1');
+    const avatar2 = document.getElementById('avatar2');
+    const cardTitle = document.getElementById('cardTitle');
+    const cardSub = document.getElementById('cardSub');
+
+    const nf = new Intl.NumberFormat('en-US');
+
+    function formatYear(y){
+      // show large numbers compactly if desired, else full integer
+      return nf.format(Math.round(y));
+    }
+
+    function pickScene(year){
+      for(let s of scenes){
+        if(year <= s.max) return s;
+      }
+      return scenes[scenes.length-1];
+    }
+
+    function updateUI(){
+      const year = parseFloat(yearRange.value);
+      yearBubble.textContent = formatYear(year);
+      selectedYearReadable.textContent = formatYear(year);
+      // pick scene
+      const s = pickScene(year);
+      sceneLabel.textContent = s.label;
+      dialog.textContent = s.dialog;
+      bgLegend.textContent = s.label;
+      // smooth background change
+      sceneEl.style.background = s.bg + ", linear-gradient(180deg, rgba(255,255,255,0.015), transparent)";
+      // avatar moods depend on era
+      const ageRatio = year / 14000000000;
+      // scale avatars based on proximity to present
+      const scaleA = 0.9 + 0.4*Math.min(1, Math.abs(ageRatio - 0.985)*8);
+      avatar1.style.transform = `translateY(${(1-ageRatio)*6}px) scale(${1 - Math.abs(ageRatio-0.98)*0.08})`;
+      avatar2.style.transform = `translateY(${(1-ageRatio)*6}px) scale(${0.85 + (1-ageRatio)*0.18})`;
+      // change avatar labels subtly for fun
+      avatar1.innerHTML = `Aryan<br/><small style="font-weight:600;color:#053046">${ ageRatio > 0.999? 'Panicker' : 'Panicker' }</small>`;
+      avatar2.innerHTML = `${ ageRatio < 0.05 ? 'Proto-Mrudav' : 'Mrudav' }`;
+      // update printable card
+      cardTitle.textContent = `Meeting — Aryan & Mrudav`;
+      cardSub.textContent = `Year: ${formatYear(year)} — ${s.label}`;
+    }
+
+    // wire events
+    yearRange.addEventListener('input', updateUI);
+    yearRange.addEventListener('change', updateUI);
+
+    // keyboard arrow support for accessibility
+    yearRange.addEventListener('keydown', (e) => {
+      const step = parseInt(yearRange.step);
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowDown'){ yearRange.value = Math.max(yearRange.min, +yearRange.value - step); updateUI(); }
+      if(e.key === 'ArrowRight' || e.key === 'ArrowUp'){ yearRange.value = Math.min(yearRange.max, +yearRange.value + step); updateUI(); }
+    });
+
+    // Reset button
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      yearRange.value = 13800000000;
+      updateUI();
+    });
+
+    // export to PNG using html2canvas
+    document.getElementById('exportBtn').addEventListener('click', async ()=>{
+      const exportArea = document.getElementById('app');
+      try{
+        const canvas = await html2canvas(exportArea, { scale: 2, backgroundColor: null });
+        const dataUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = `meeting-aryan-mrudav-${Date.now()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }catch(err){
+        alert('Export failed — check console for details.');
+        console.error(err);
+      }
+    });
+
+    // initialize
+    updateUI();
+
+    // small fun: allow clicking avatars to swap dialog tone
+    let tone = 0;
+    avatars.addEventListener('click', ()=>{
+      tone = (tone+1) % 3;
+      const year = +yearRange.value;
+      const s = pickScene(year);
+      const toneVariants = [
+        s.dialog,
+        s.dialog + " (they laugh about improbable ideas.)",
+        s.dialog + " (a quiet, thoughtful pause follows — a plan forms.)"
+      ];
+      dialog.textContent = toneVariants[tone];
+    });
+
+    // Make slider steps friendlier on mobile by adjusting step on touch
+    yearRange.addEventListener('touchstart', ()=>{
+      yearRange.step = 1000000; // 1 million step
+    });
+
+  </script>
+</body>
+</html>
