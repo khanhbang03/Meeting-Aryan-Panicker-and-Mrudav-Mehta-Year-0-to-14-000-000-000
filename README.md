@@ -1,4 +1,4 @@
-// Scenes definitions mapped to ranges (years)
+// Scenes definitions mapped to ranges (years)<br>
     const scenes = [
       { max: 1e4, label: "The Spark — Big Bang", dialog: "The universe sparks into being. Aryan and Mrudav meet as raw particles of possibility, exchanging concept-ideas written in light."},<br>
       { max: 1e8, label: "Afterglow — Early Cosmos", dialog: "The cosmos cools and galaxies form. They greet each other with wide-eyed wonder, speaking in simple hopes and maps."},<br>
